@@ -1,23 +1,9 @@
-user node['bitcoind']['user'] do
-  home node['bitcoind']['binary']['home']
-  shell "/bin/bash"
-  supports manage_home: true
-end
-
-directory "#{node['bitcoind']['binary']['home']}/.bitcoin" do
-  owner node['bitcoind']['user']
-  group node['bitcoind']['user']
-  mode "0700"
+execute "apt_get_update" do
+  command "apt-get update"
+  not_if { ::File.exists?(node['bitcoind']['home']) }
 end
 
 include_recipe 'bitcoind::install-dependencies'
-
-template "#{node['bitcoind']['binary']['home']}/.bitcoin/bitcoin.conf" do
-  owner node['bitcoind']['user']
-  group node['bitcoind']['user']
-  mode "0600"
-  action :create_if_missing
-end
 
 git "bitcoind_repo" do
   user node['bitcoind']['user']
@@ -31,12 +17,14 @@ end
 
 script "configure_build_bitcoind" do
   interpreter 'bash'
-  #user node['bitcoind']['user']
+  user node['bitcoind']['user']
+  group node['bitcoind']['user']
   cwd node['bitcoind']['source']['source_dir']
   code <<-EOH
 ./autogen.sh
 ./configure CPPFLAGS="-I${BDB_PREFIX}/include/ -O2" LDFLAGS="-L${BDB_PREFIX}/lib/"
 make
-make install
+sudo make install
   EOH
+  not_if { ::File.exists?(File.join(node['bitcoind']['source']['bin_location'], node['bitcoind']['source']['bin_name'])) }
 end

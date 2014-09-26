@@ -21,8 +21,12 @@ upnp=<%= node['bitcoind']['config']['upnp'] %>
 #connect=69.164.218.197
 #connect=10.0.0.1:8333
 
+txindex=<%= node['bitcoind']['config']['txindex'] %>
+
 # Maximum number of inbound+outbound connections.
 #maxconnections=
+
+listen=<%= node['bitcoind']['config']['listen'] %>
 
 
 # JSON-RPC options (for controlling a running Bitcoin/bitcoind process)
@@ -52,6 +56,11 @@ rpcallowip=<%= addr %>
 # Listen for RPC connections on this TCP port:
 <% unless node['bitcoind']['config']['rpcport'].nil? -%>
 rpcport=<%= node['bitcoind']['config']['rpcport'] %>
+<% end -%>
+
+# Listen for P2P connections on this TCP port:
+<% unless node['bitcoind']['config']['port'].nil? -%>
+port=<%= node['bitcoind']['config']['port'] %>
 <% end -%>
 
 # You can use Bitcoin or bitcoind to send commands to Bitcoin/bitcoind
@@ -104,5 +113,3 @@ alertnotify=echo %s | mail -s "Bitcoin Alert" <%= node['bitcoind']['config']['al
 <% unless node['bitcoind']['config']['checkblocks'].nil? || !node['bitcoind']['config']['checkblocks'] -%>
 checkblocks=<%= node['bitcoin']['checkblocks'] %>
 <% end -%>
-
-

@@ -10,4 +10,4 @@ setgid <%= @bitcoind_group %>
 
 env HOME=<%= @bitcoind_home %>
 
-exec <%= @bitcoind_bin_location %><%= @bitcoind_bin_name %> <%= @bitcoind_options %> 2>&1 | logger -t bitcoind
+exec <%= File.join(@bitcoind_bin_location, @bitcoind_bin_name) %> -datadir=<%= @bitcoind_data_dir %> <%= @bitcoind_options %> 2>&1 | logger -t <%= @bitcoind_bin_name %>
