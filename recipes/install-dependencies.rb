@@ -1,4 +1,4 @@
-%w[build-essential autogen autoconf libboost-all-dev libssl-dev libprotobuf-dev openssl protobuf-compiler libqt4-dev libqrencode-dev].each do |pkg|
+%w[build-essential pkg-config autogen autoconf libboost-all-dev libssl-dev libprotobuf-dev openssl protobuf-compiler libqt4-dev libqrencode-dev].each do |pkg|
   package pkg do
     action :install
   end
@@ -24,14 +24,18 @@ link File.join(node['bitcoind']['home'], "db") do
   action :create
 end
 
+directory node['bitcoind']['db']['bdb_prefix'] do
+  owner node['bitcoind']['user']
+  group node['bitcoind']['group']
+  action :create
+end
+
 bash "install_db" do
   cwd File.join(node['bitcoind']['home'], node['bitcoind']['db']['filename'], 'build_unix')
   code <<-EOH
-mkdir -p build
-BDB_PREFIX=$(pwd)/build
-../dist/configure --disable-shared --enable-exx --with-pic --prefix=$BDB_PREFIX
+../dist/configure --disable-shared --enable-cxx --with-pic --prefix=#{node['bitcoind']['db']['bdb_prefix']}
 make install
 cd ../..
   EOH
-  not_if { ::File.exists?(File.join(node['bitcoind']['home'], node['bitcoind']['db']['filename'], "build_unix/build/bin/db_stat")) }
+  not_if { ::File.exists?(File.join(node['bitcoind']['db']['bdb_prefix'], '/bin/db_stat')) }
 end

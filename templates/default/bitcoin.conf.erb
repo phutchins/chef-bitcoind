@@ -4,10 +4,10 @@
 # Network-related settings:
 
 # Run on the test network instead of the real bitcoin network.
-testnet=<%= node['bitcoind']['config']['testnet'] %>
-irc=<%= node['bitcoind']['config']['irc'] %>
-dnsseed=<%= node['bitcoind']['config']['dnsseed'] %>
-upnp=<%= node['bitcoind']['config']['upnp'] %>
+testnet=<%= @bitcoind_testnet %>
+irc=<%= @bitcoind_irc %>
+dnsseed=<%= @bitcoind_dnsseed %>
+upnp=<%= @bitcoind_upnp %>
 
 # Connect via a socks4 proxy
 #proxy=127.0.0.1:9050
@@ -21,25 +21,25 @@ upnp=<%= node['bitcoind']['config']['upnp'] %>
 #connect=69.164.218.197
 #connect=10.0.0.1:8333
 
-txindex=<%= node['bitcoind']['config']['txindex'] %>
+txindex=<%= @bitcoind_txindex %>
 
 # Maximum number of inbound+outbound connections.
 #maxconnections=
 
-listen=<%= node['bitcoind']['config']['listen'] %>
+listen=<%= @bitcoind_listen %>
 
 
 # JSON-RPC options (for controlling a running Bitcoin/bitcoind process)
 
 # server=1 tells Bitcoin to accept JSON-RPC commands.
-server=<%= node['bitcoind']['config']['server'] %>
+server=<%= @bitcoind_server %>
 
 # You must set rpcuser and rpcpassword to secure the JSON-RPC api
-<% unless node['bitcoind']['config']['rpcuser'].nil? -%>
-rpcuser=<%= node['bitcoind']['config']['rpcuser'] %>
+<% unless @bitcoind_rpcuser.nil? -%>
+rpcuser=<%= @bitcoind_rpcuser %>
 <% end -%>
-<% unless node['bitcoind']['config']['rpcpassword'].nil? -%>
-rpcpassword=<%= node['bitcoind']['config']['rpcpassword'] %>
+<% unless @bitcoind_rpcpassword.nil? -%>
+rpcpassword=<%= @bitcoind_rpcpassword %>
 <% end -%>
 
 # By default, only RPC connections from localhost are allowed.  Specify
@@ -47,26 +47,26 @@ rpcpassword=<%= node['bitcoind']['config']['rpcpassword'] %>
 # other hosts (and you may use * as a wildcard character):
 #rpcallowip=10.1.1.34
 #rpcallowip=192.168.1.*
-<% unless node['bitcoind']['config']['rpcallowip'].nil? || !node['bitcoind']['config']['rpcallowip'] -%>
-  <% node['bitcoind']['config']['rpcallowip'].each do |addr| -%>
+<% unless @bitcoind_rpcallowip.nil? || !@bitcoind_rpcallowip -%>
+  <% @bitcoind_rpcallowip.each do |addr| -%>
 rpcallowip=<%= addr %>
   <% end -%>
 <% end -%>
 
 # Listen for RPC connections on this TCP port:
-<% unless node['bitcoind']['config']['rpcport'].nil? -%>
-rpcport=<%= node['bitcoind']['config']['rpcport'] %>
+<% unless @bitcoind_rpcport.nil? -%>
+rpcport=<%= @bitcoind_rpcport %>
 <% end -%>
 
 # Listen for P2P connections on this TCP port:
-<% unless node['bitcoind']['config']['port'].nil? -%>
-port=<%= node['bitcoind']['config']['port'] %>
+<% unless @bitcoind_port.nil? -%>
+port=<%= @bitcoind_port %>
 <% end -%>
 
 # You can use Bitcoin or bitcoind to send commands to Bitcoin/bitcoind
 # running on another host using this option:
-<% unless node['bitcoind']['config']['rpcconnect'].nil? || !node['bitcoind']['config']['rpcconnect'] -%>
-  <% node['bitcoind']['config']['rpcconnect'].each do |addr| -%>
+<% unless @bitcoind_rpcconnect.nil? || !@bitcoind_rpcconnect -%>
+  <% @bitcoind_rpcconnect.each do |addr| -%>
 rpcconnect=<%= addr %>
   <% end -%>
 <% end -%>
@@ -74,22 +74,22 @@ rpcconnect=<%= addr %>
 
 # Use Secure Sockets Layer (also known as TLS or HTTPS) to communicate
 # with Bitcoin -server or bitcoind
-rpcssl=<%= node['bitcoind']['config']['rpcssl'] %>
+rpcssl=<%= @bitcoind_rpcssl %>
 
 # OpenSSL settings used when rpcssl=1
 #rpcsslciphers=TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:@STRENGTH
-<% unless node['bitcoind']['config']['rpcsslcertificatechainfile'].nil? || !node['bitcoind']['config']['rpcsslcertificatechainfile'] -%>
-rpcsslcertificatechainfile=<%= node['bitcoind']['config']['rpcsslcertificatechainfile'] %>
+<% unless @bitcoind_rpcsslcertificatechainfile.nil? || !@bitcoind_rpcsslcertificatechainfile -%>
+rpcsslcertificatechainfile=<%= @bitcoind_rpcsslcertificatechainfile %>
 <% end -%>
-<% unless node['bitcoind']['config']['rpcsslprivatekeyfile'].nil? || !node['bitcoind']['config']['rpcsslprivatekeyfile'] -%>
-rpcsslprivatekeyfile=<%= node['bitcoind']['config']['rpcsslprivatekeyfile'] %>
+<% unless @bitcoind_rpcsslprivatekeyfile.nil? || !@bitcoind_rpcsslprivatekeyfile -%>
+rpcsslprivatekeyfile=<%= @bitcoind_rpcsslprivatekeyfile %>
 <% end -%>
 
 
 # Miscellaneous options
 
 # Set gen=1 to attempt to generate bitcoins
-gen=<%= node['bitcoind']['config']['gen'] %>
+gen=<%= @bitcoind_gen %>
 
 # Use SSE instructions to try to generate bitcoins faster.
 #4way=1
@@ -106,10 +106,10 @@ gen=<%= node['bitcoind']['config']['gen'] %>
 # Allow direct connections for the 'pay via IP address' feature.
 #allowreceivebyip=1
 
-<% unless node['bitcoind']['config']['alertnotify'].nil? || !node['bitcoind']['config']['alertnotify'] -%>
-alertnotify=echo %s | mail -s "Bitcoin Alert" <%= node['bitcoind']['config']['alertnotify'] %>
+<% unless @bitcoind_alertnotify.nil? || !@bitcoind_alertnotify -%>
+alertnotify=echo %s | mail -s "Bitcoin Alert" <%= @bitcoind_alertnotify %>
 <% end -%>
 
-<% unless node['bitcoind']['config']['checkblocks'].nil? || !node['bitcoind']['config']['checkblocks'] -%>
-checkblocks=<%= node['bitcoin']['checkblocks'] %>
+<% unless @bitcoind_checkblocks.nil? || !@bitcoind_checkblocks -%>
+checkblocks=<%= @bitcoind_checkblocks %>
 <% end -%>

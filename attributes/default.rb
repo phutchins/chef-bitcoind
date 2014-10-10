@@ -2,7 +2,7 @@ default['bitcoind']['install_method'] = 'source'
 default['bitcoind']['user'] = 'bitcoind'
 default['bitcoind']['group'] = 'bitcoind'
 default['bitcoind']['home'] = '/opt/bitcoind'
-default['bitcoind']['data_dir'] = '/opt/bitcoind/bitcoind'
+default['bitcoind']['data_dir'] = '/opt/bitcoin'
 default['bitcoind']['checkblocks'] = 288
 
 # Install from source
@@ -16,6 +16,4 @@ default['bitcoind']['source']['bin_name'] = 'bitcoind'
 default['bitcoind']['db']['source_url'] = "http://download.oracle.com/berkeley-db/"
 default['bitcoind']['db']['filename'] = "db-4.8.30.NC"
 default['bitcoind']['db']['extension'] = ".tar.gz"
-
-# Configuration
-default['bitcoind']['options'] = "-daemon"
+default['bitcoind']['db']['bdb_prefix'] = "/opt/bitcoind/db4"
