@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'berkshelf'
 
-group :development do
+group :development, :test do
   gem 'test-kitchen'
   gem 'kitchen-vagrant'
   gem 'guard'
