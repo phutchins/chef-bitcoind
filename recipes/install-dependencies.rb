@@ -1,4 +1,27 @@
-%w[build-essential pkg-config autogen autoconf libboost-all-dev libssl-dev libprotobuf-dev openssl protobuf-compiler libqt4-dev libqrencode-dev].each do |pkg|
+case node[:platform]
+  when "debian", "ubuntu"
+    execute "aptget_update" do
+      command "apt-get update"
+      action :nothing
+    end.run_action(:run)
+    %w[build-essential].each do |pkg|
+      package pkg do
+        action :install
+      end
+    end
+  when "centos", "redhat"
+#    execute "yum_update" do
+#      command "yum update"
+#      action :nothing
+#    end.run_action(:run)
+    %w[gcc gcc-c++ kernel-devel].each do |pkg|
+      package pkg do
+        action :install
+      end
+    end
+end
+
+%w[git pkg-config autogen autoconf libboost-all-dev libssl-dev libprotobuf-dev openssl protobuf-compiler libqt4-dev libqrencode-dev].each do |pkg|
   package pkg do
     action :install
   end

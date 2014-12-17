@@ -3,7 +3,7 @@ execute "apt_get_update" do
   not_if { ::File.exists?(node['bitcoind']['home']) }
 end
 
-include_recipe 'bitcoind::install-dependencies'
+include_recipe 'chef-bitcoind::install-dependencies'
 
 git "bitcoind_repo" do
   user node['bitcoind']['user']

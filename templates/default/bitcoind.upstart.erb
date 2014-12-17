@@ -5,6 +5,9 @@ description "<%= @bitcoind_name %>"
 start on filesystem
 stop on runlevel [016]
 
+respawn
+respawn limit 5 15
+
 setuid <%= @bitcoind_user %>
 setgid <%= @bitcoind_group %>
 

@@ -1,8 +1,7 @@
-name             'bitcoind'
+name             'chef-bitcoind'
 maintainer       'Philip Hutchins'
-maintainer_email 'philip@bitpay.com'
-license          'BSD'
+maintainer_email 'flipture@gmail.com'
+license          'Apache 2.0'
 description      'Installs/Configures bitcoind'
 long_description 'Installs/Configures bitcoind'
-version          '0.1.1'
-
+version          '0.1.3'

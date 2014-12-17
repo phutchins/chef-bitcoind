@@ -17,7 +17,9 @@ directory node['bitcoind']['home'] do
 end
 
 if node['bitcoind']['instances'].nil?
-  node['bitcoind']['instances']['bitcoin']['name'] = 'bitcoin'
+  node.set['bitcoind']['instances']['bitcoin'] = ({
+    'name' => 'bitcoin'
+  })
 end
 
 node['bitcoind']['instances'].each do |instance|
@@ -25,8 +27,6 @@ node['bitcoind']['instances'].each do |instance|
   node['bitcoind']['config'].each do |key, value|
     config_merged[key] = value unless config_merged.has_key? key
   end
-
-  config_merged['data_dir'] ||= node['bitcoind']['data_dir']
 
   directory config_merged['data_dir'] do
     user node['bitcoind']['user']
@@ -37,9 +37,9 @@ end
 
 case node['bitcoind']['install_method']
 when "source"
-  include_recipe "bitcoind::install-source"
+  include_recipe "chef-bitcoind::install-source"
 when "package"
-  include_recipe "bitcoind::install-package"
+  include_recipe "chef-bitcoind::install-package"
 else
   fail "No install method defined. Please define config_merged['install_method']"
 end
