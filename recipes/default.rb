@@ -29,7 +29,7 @@ node['bitcoind']['instances'].each do |instance|
   end
 
   directory config_merged['data_dir'] do
-    mode 6750
+    mode '6750'
     user node['bitcoind']['user']
     group node['bitcoind']['group']
     action :create
