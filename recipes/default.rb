@@ -29,6 +29,7 @@ node['bitcoind']['instances'].each do |instance|
   end
 
   directory config_merged['data_dir'] do
+    mode 6750
     user node['bitcoind']['user']
     group node['bitcoind']['group']
     action :create
@@ -95,7 +96,6 @@ node['bitcoind']['instances'].each do |instance|
 
   service config_merged['name'] do
     provider Chef::Provider::Service::Upstart
-    supports :status => true, :restart => true
     action [ :enable, :start ]
   end
 end
