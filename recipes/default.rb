@@ -4,8 +4,13 @@
 #
 # Copyright (c) 2014 The Authors, All Rights Reserved.
 
+group node['bitcoind']['group'] do
+  action :create
+end
+
 user node['bitcoind']['user'] do
   home node['bitcoind']['home']
+  gid node['bitcoind']['group']
   shell "/bin/bash"
   action :create
 end
