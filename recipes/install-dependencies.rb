@@ -1,4 +1,4 @@
-case node[:platform]
+case node['platform']
   when "debian", "ubuntu"
     execute "aptget_update" do
       command "apt-get update"
@@ -9,7 +9,7 @@ case node[:platform]
         action :install
       end
     end
-  when "centos", "redhat"
+  when "centos", "redhat", "amazon", "scientific"
 #    execute "yum_update" do
 #      command "yum update"
 #      action :nothing
