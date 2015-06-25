@@ -1,0 +1,8 @@
+#!/bin/bash
+cnt=`bitcoin-cli -datadir=/data/bitcoind-testnet getblockcount`
+hash=`bitcoin-cli -datadir=/data/bitcoind-testnet getblockhash ${cnt}`
+timeline=`bitcoin-cli -datadir=/data/bitcoind-testnet getblock $hash | grep '"time"'`
+ltrimtime=${timeline#*time\" : }
+newest=${ltrimtime%%,*}
+#echo $((`date +%s`-$newest))
+echo "Minutes Behind: "$(((`date +%s`-$newest)/60))
