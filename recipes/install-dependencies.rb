@@ -21,7 +21,7 @@ case node['platform']
     end
 end
 
-%w[git pkg-config autogen autoconf libboost-all-dev libssl-dev libprotobuf-dev openssl protobuf-compiler libqt4-dev libqrencode-dev].each do |pkg|
+%w[git pkg-config autogen autoconf libboost-all-dev libtool libssl-dev libprotobuf-dev openssl protobuf-compiler libqt4-dev libqrencode-dev].each do |pkg|
   package pkg do
     action :install
   end
