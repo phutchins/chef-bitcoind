@@ -7,7 +7,7 @@ default['bitcoind']['checkblocks'] = 288
 # Install from source
 default['bitcoind']['source']['source_dir'] = '/opt/bitcoind/bitcoind'
 default['bitcoind']['source']['git_repo'] = 'https://github.com/bitcoin/bitcoin.git'
-default['bitcoind']['source']['git_revision'] = 'v0.10.2'
+default['bitcoind']['source']['git_revision'] = 'v0.11.0'
 default['bitcoind']['source']['bin_location'] = '/usr/local/bin'
 default['bitcoind']['source']['bin_name'] = 'bitcoind'
 
